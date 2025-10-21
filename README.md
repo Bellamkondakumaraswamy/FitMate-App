@@ -35,7 +35,64 @@ Built with **React.js** for frontend, **Node.js + Express** for backend, and **M
 
 ## 🎬 Demo
 
-Experience the app in action:  
+## 🎬 Demo
+
+Experience FitMate-App in action! Below is a step-by-step demo of the main features.
+
+---
+
+### 1️⃣ Home Page & Dashboard
+Welcome to your personalized fitness dashboard. You can see an overview of your calorie intake, water consumption, and workouts.
+
+![Home Page](./assets/home.gif)
+
+---
+
+### 2️⃣ User Authentication
+Register a new account or log in to securely access your data.
+
+![Login/Register](./assets/login-register.gif)
+
+---
+
+### 3️⃣ Calorie Calculator
+Calculate your daily calorie needs based on age, weight, height, and activity level.
+
+![Calorie Calculator](./assets/calorie-tracker.gif)
+
+---
+
+### 4️⃣ Meal Plan Tracker
+Add meals, track nutrition, and monitor your daily calorie intake.
+
+![Meal Tracker](./assets/meal-tracker.gif)
+
+---
+
+### 5️⃣ Workout Planner
+Search and manage workouts. Add exercises to your daily routine and track progress.
+
+![Workout Planner](./assets/workout-planner.gif)
+
+---
+
+### 6️⃣ Water Intake Tracker
+Log daily water consumption and stay hydrated.
+
+![Water Tracker](./assets/water-tracker.gif)
+
+---
+
+### 7️⃣ Profile Management
+Update your personal health information, including weight, height, and fitness goals.
+
+![Profile Management](./assets/profile-management.gif)
+
+---
+
+**Tip:** Replace the placeholder GIFs in `./assets/` with actual screen recordings of your app to make the demo interactive and visually engaging.
+
+  
 
 ![App Demo](./assets/demo.gif)
 
