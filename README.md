@@ -59,3 +59,42 @@ npx nodemon app.js
 # Start frontend server
 cd ../frontend
 npm start
+
+
+Open your browser at http://localhost:3000
+
+Usage
+
+1.Register a new account or login with existing credentials.
+
+2.Add your personal health data.
+
+3.Track calories, water intake, meal plans, and workouts.
+
+4.Update your profile and monitor your fitness progress.
+
+
+Screenshots
+<img width="1920" height="1140" alt="image" src="https://github.com/user-attachments/assets/15bf87a9-1387-4a60-924d-d08e0e8719a6" />
+<img width="1920" height="1140" alt="image" src="https://github.com/user-attachments/assets/6b4e5b03-50f2-4d83-a394-60457e23ca4b" />
+
+
+Contributing
+
+Contributions are welcome!
+
+1.Fork the repository
+
+2.Create a new branch: git checkout -b feature/your-feature-name
+
+3.Make changes and commit: git commit -m "Add new feature"
+
+4.Push to branch: git push origin feature/your-feature-name
+
+5.Open a pull request
+
+Author: Kumaraswamy Bellamkonda
+GitHub: https://github.com/Bellamkondakumaraswamy
+
+Email: bellamkondakumaraswamy99@gmail.com
+
