@@ -1,62 +1,19 @@
-import asyncHandler from "express-async-handler";
-import UserMealPlan from "../models/UserMealPlanModel.js";
+import MealPlan from "../models/UserMealPlanModel.js";
 
-// @desc      Create user meal plan
-// @route     POST /api/user/meal-plan
-// @access    Private
-const createUserMealPlan = asyncHandler(async (req, res) => {
-  const { date, meal1, meal2, meal3, meal4, meal5, snacks } = req.body;
-  const userId = req.user._id;
+// Create a new meal plan
+export const createUserMealPlan = async (req, res) => {
+  try {
+    console.log("📥 req.user:", req.user);
+    console.log("📥 req.body:", req.body);
 
-  const userMealPlan = await UserMealPlan.create({
-    userId,
-    date,
-    meal1,
-    meal2,
-    meal3,
-    meal4,
-    meal5,
-    snacks,
-  });
+    const { date, meal1, meal2, meal3, meal4, meal5, snacks } = req.body;
 
-  if (userMealPlan) {
-    res.status(201).json(userMealPlan);
-  } else {
-    res.status(400);
-    throw new Error("Invalid user meal plan data");
-  }
-});
+    if (!date) {
+      return res.status(400).json({ error: "Date is required" });
+    }
 
-// @desc      Get user meal plan for a specific date
-// @route     GET /api/user/meal-plan/:date
-// @access    Private
-const getUserMealPlan = asyncHandler(async (req, res) => {
-  const { date } = req.params;
-  const userId = req.user._id;
-
-  const userMealPlan = await UserMealPlan.findOne({ userId, date });
-
-  if (userMealPlan) {
-    res.status(200).json(userMealPlan);
-  } else {
-    res.status(404);
-    throw new Error("User meal plan not found");
-  }
-});
-
-// @desc      Update user meal plan for a specific date
-// @route     PUT /api/user/meal-plan/:date
-// @access    Private
-const updateUserMealPlan = asyncHandler(async (req, res) => {
-  const { date, meal1, meal2, meal3, meal4, meal5, snacks } = req.body;
-  const userId = req.user._id;
-
-  let userMealPlan = await UserMealPlan.findOne({ userId, date });
-
-  if (!userMealPlan) {
-    // If user meal plan doesn't exist, create a new one
-    userMealPlan = await UserMealPlan.create({
-      userId,
+    const mealPlan = new MealPlan({
+      userId: req.user._id,
       date,
       meal1,
       meal2,
@@ -65,19 +22,63 @@ const updateUserMealPlan = asyncHandler(async (req, res) => {
       meal5,
       snacks,
     });
-    res.status(201).json(userMealPlan);
-  } else {
-    // If user meal plan exists, update it
-    userMealPlan.meal1 = meal1 || userMealPlan.meal1;
-    userMealPlan.meal2 = meal2 || userMealPlan.meal2;
-    userMealPlan.meal3 = meal3 || userMealPlan.meal3;
-    userMealPlan.meal4 = meal4 || userMealPlan.meal4;
-    userMealPlan.meal5 = meal5 || userMealPlan.meal5;
-    userMealPlan.snacks = snacks || userMealPlan.snacks;
 
-    const updatedUserMealPlan = await userMealPlan.save();
-    res.status(200).json(updatedUserMealPlan);
+    await mealPlan.save();
+
+    res.status(201).json({ message: "Meal plan saved successfully", mealPlan });
+  } catch (error) {
+    console.error("❌ createUserMealPlan error:", error);
+    res.status(500).json({ error: "Internal Server Error" });
   }
-});
+};
 
-export { createUserMealPlan, getUserMealPlan, updateUserMealPlan };
+// Update an existing meal plan
+export const updateUserMealPlan = async (req, res) => {
+  try {
+    const { date, meal1, meal2, meal3, meal4, meal5, snacks } = req.body;
+
+    const mealPlan = await MealPlan.findOne({
+      userId: req.user._id,
+      date,
+    });
+
+    if (!mealPlan) {
+      return res.status(404).json({ message: "Meal plan not found" });
+    }
+
+    mealPlan.meal1 = meal1 || mealPlan.meal1;
+    mealPlan.meal2 = meal2 || mealPlan.meal2;
+    mealPlan.meal3 = meal3 || mealPlan.meal3;
+    mealPlan.meal4 = meal4 || mealPlan.meal4;
+    mealPlan.meal5 = meal5 || mealPlan.meal5;
+    mealPlan.snacks = snacks || mealPlan.snacks;
+
+    await mealPlan.save();
+
+    res.status(200).json({ message: "Meal plan updated", mealPlan });
+  } catch (error) {
+    console.error("❌ updateUserMealPlan error:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+// Get a meal plan for a specific date
+export const getUserMealPlan = async (req, res) => {
+  try {
+    const { date } = req.params;
+
+    const mealPlan = await MealPlan.findOne({
+      userId: req.user._id,
+      date,
+    });
+
+    if (!mealPlan) {
+      return res.status(404).json({ message: "No meal plan found for this date" });
+    }
+
+    res.status(200).json(mealPlan);
+  } catch (error) {
+    console.error("❌ getUserMealPlan error:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
